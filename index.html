@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- user-scalable=no / maximum-scale=1 disable pinch + double-tap zoom
+       (read-only surface). Lets the app drop its WebView zoom-disabling code. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="color-scheme" content="light only">
+  <title>What's new · Mistral Gliders</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --card: #f5f6f8;
+      --text: #1f2328;
+      --text-soft: #525a64;
+      --accent: #2f6bd6;
+      --accent-soft: #eaf1fc;
+      --border: #e6e8eb;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* legacy Edge */
+    }
+    /* Hide the scroll bar — this is a read-only WebView surface. Covers
+       web-rendered scrollbars (Android WebView + desktop browser). The iOS
+       WKWebView scroll indicator is native and stays hidden app-side. */
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      /* Read-only surface: no text/image selection, no long-press callout,
+         no double-tap zoom. Lets the app drop its WebView-injected equivalents. */
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      touch-action: manipulation;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 30px 20px 56px;
+    }
+
+    /* Generic card — used for each version block and for the feedback block. */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px 6px;
+      margin-bottom: 22px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    }
+
+    .version-badge {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 999px;
+    }
+
+    .feature { margin: 0 0 22px; }
+
+    .feature-title {
+      margin: 0 0 5px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.32;
+    }
+
+    .feature-text {
+      margin: 0;
+      color: var(--text-soft);
+    }
+
+    .feature-text a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      word-break: break-word;
+    }
+    .feature-text a:hover { text-decoration: underline; }
+
+    /* Screenshot row. One or more shots per feature; .shots-2 = side by side.
+       Natural sizing (max-width/max-height) keeps the aspect and lets the
+       border hug the image — no letterbox, no distortion. A missing file
+       hides its own <img> via the inline onerror (no broken-image icon). */
+    .shots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 14px 0 2px;
+    }
+    .feature-img {
+      display: block;
+      max-width: 100%;
+      max-height: 380px;
+      width: auto;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .shots-2 .feature-img { max-width: calc(50% - 6px); max-height: 320px; }
+    .shots-sm .feature-img { max-height: 190px; }   /* half-height cap for short/wide shots */
+
+    @media (max-width: 480px) {
+      body { font-size: 16px; }
+      .container { padding: 24px 16px 44px; }
+      .card { padding: 20px 16px 4px; }
+      .shots-2 .feature-img { max-width: 100%; }   /* stack the pair on phones */
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <!-- ==============================================================
+         ENGLISH  —  default / fallback.
+         Shown when ?lang= is missing or does NOT start with "fr".
+         Stays visible even if JavaScript is disabled.
+         ============================================================== -->
+    <div id="content-en" class="lang-block">
+
+      <!-- To add a future version: copy ONE <section class="card" data-version="…">
+           version block and paste it directly BELOW this comment (above 5.0.0).
+           Keep the "feedback" card last. Mirror the SAME change in the French
+           block (#content-fr). -->
+      <section class="card" data-version="5.0.0">
+        <span class="version-badge">5.0.0</span>
+
+        <div class="feature">
+          <h2 class="feature-title">Flight trails in 3D, and in color</h2>
+          <p class="feature-text">Admire the beautiful spirals in thermals, the real 3D terrain, and compare the altitudes of different gliders in flight, live. See how flights unfold at a glance.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-3d.png" alt="Flight trails shown in 3D and in color over the real terrain" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">New flight logs, for ALL airfields</h2>
+          <p class="feature-text">Flight-log detection has been rebuilt from scratch to be as accurate as possible and to handle every airfield and aerodrome in Mistral (the old version only worked with airfields that had an ICAO code).</p>
+          <div class="shots shots-sm">
+            <img class="feature-img" src="images/whats-new-flightlog.png" alt="An airfield flight log listing aircraft, times and runways" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Filter the map to an airfield's fleet</h2>
+          <p class="feature-text">Tap an airfield on the map to focus the view on just its fleet, and open its flight log, weather and details from one place.</p>
+          <div class="shots shots-2">
+            <img class="feature-img" src="images/whats-new-airfield-select.png" alt="Selecting an airfield on the map" onerror="this.style.display='none'">
+            <img class="feature-img" src="images/whats-new-airfield-flightlog.png" alt="An airfield's panel open on its flight log" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Flight log per glider/aircraft</h2>
+          <p class="feature-text">You can now see an aircraft's flight history directly by selecting it on the map.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-aircraft-flightlog.png" alt="An aircraft panel showing live data, nearest airfields and previous flights" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Nearby airfields</h2>
+          <p class="feature-text">When you select an aircraft on the map, the 3 nearest aerodromes are shown with their distance from the glider — a quick way to weigh your options if conditions worsen.</p>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Custom marker labels for your bookmarks</h2>
+          <p class="feature-text">Give a bookmarked aircraft a short custom label that shows right on its map marker.</p>
+          <div class="shots shots-sm">
+            <img class="feature-img" src="images/whats-new-bookmark-label.png" alt="Setting a custom marker label for a bookmarked aircraft" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Support for new trackers</h2>
+          <p class="feature-text">WeGlide, Puretrack, Wingman and Volandoo aircraft are now supported by Mistral, in addition to those already supported (Microtrak, Fanet, Naviter, SafeSky, FlyMaster, Pilot Aware, etc.)</p>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Search is now available</h2>
+          <p class="feature-text">Find any aircraft, airfield or receiver in seconds with the new search bar — included in this release.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-search.png" alt="The new search bar with aircraft and airfield results" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- Persistent feedback card — keep it below the version cards. -->
+      <section class="card">
+        <div class="feature">
+          <h2 class="feature-title">Other ideas or feedback?</h2>
+          <p class="feature-text">Feel free to write to us via the chat in the settings, or by email at <a href="mailto:hello@mistralgliders.com">hello@mistralgliders.com</a>.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==============================================================
+         FRENCH  —  shown only when ?lang= starts with "fr".
+         Hidden by default so the English fallback shows without JS.
+         ============================================================== -->
+    <div id="content-fr" class="lang-block" style="display:none">
+
+      <!-- Pour ajouter une future version : copier UN bloc <section class="card" data-version="…">
+           et le coller juste SOUS ce commentaire (au-dessus de 5.0.0). Garder la
+           carte « remarques » en dernier. Refléter le MÊME ajout dans le bloc
+           anglais (#content-en). -->
+      <section class="card" data-version="5.0.0">
+        <span class="version-badge">5.0.0</span>
+
+        <div class="feature">
+          <h2 class="feature-title">Traces de vol en 3D, et en couleur</h2>
+          <p class="feature-text">Admirez les belles spirales dans les thermiques, le vrai relief en 3D, et comparez en live les altitudes des différents planeurs en vol. Visualisez les évolutions des vols d'un seul coup d'œil.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-3d.png" alt="Traces de vol affichées en 3D et en couleur sur le relief réel" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Nouvelles planches de vols, pour TOUS les terrains</h2>
+          <p class="feature-text">La détection des planches de vols a été reconstruite à zéro, afin d'être la plus précise possible et de gérer tous les terrains et aérodromes présents dans Mistral (l'ancienne version ne fonctionnait qu'avec les terrains ayant un code OACI).</p>
+          <div class="shots shots-sm">
+            <img class="feature-img" src="images/whats-new-flightlog.png" alt="Une planche de vols avec aéronefs, heures et pistes" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Filtrer la carte sur la flotte d'un terrain</h2>
+          <p class="feature-text">Touchez un terrain sur la carte pour n'afficher que sa flotte, et accédez à sa planche de vols, sa météo et ses infos d'un seul endroit.</p>
+          <div class="shots shots-2">
+            <img class="feature-img" src="images/whats-new-airfield-select.png" alt="Sélection d'un terrain sur la carte" onerror="this.style.display='none'">
+            <img class="feature-img" src="images/whats-new-airfield-flightlog.png" alt="La fiche d'un terrain ouverte sur sa planche de vols" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Planche de vols par planeur/aéronef</h2>
+          <p class="feature-text">Vous pouvez maintenant voir l'historique des vols d'un aéronef directement en le sélectionnant sur la carte.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-aircraft-flightlog.png" alt="La fiche d'un aéronef : données en direct, terrains proches et vols précédents" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Terrains à proximité</h2>
+          <p class="feature-text">En sélectionnant un aéronef sur la carte, les 3 aérodromes à proximité sont affichés avec leur distance du planeur : un moyen rapide de se rendre compte des options en cas de mauvaises conditions.</p>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Étiquettes personnalisées pour vos favoris</h2>
+          <p class="feature-text">Donnez à un aéronef favori une étiquette courte personnalisée, affichée directement sur son marqueur sur la carte.</p>
+          <div class="shots shots-sm">
+            <img class="feature-img" src="images/whats-new-bookmark-label.png" alt="Définition d'une étiquette personnalisée pour un aéronef favori" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">Support de nouveaux traqueurs</h2>
+          <p class="feature-text">Les aéronefs WeGlide, Puretrack, Wingman et Volandoo sont maintenant supportés par Mistral, en plus de ceux déjà supportés (Microtrak, Fanet, Naviter, SafeSky, FlyMaster, Pilot Aware, etc.)</p>
+        </div>
+
+        <div class="feature">
+          <h2 class="feature-title">La recherche est disponible</h2>
+          <p class="feature-text">Trouvez n'importe quel aéronef, terrain ou récepteur en quelques secondes avec la nouvelle barre de recherche, incluse dans cette version.</p>
+          <div class="shots">
+            <img class="feature-img" src="images/whats-new-search.png" alt="La nouvelle barre de recherche avec des résultats d'aéronefs et de terrains" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </section>
+
+      <!-- Carte « remarques » persistante — à garder sous les cartes de version. -->
+      <section class="card">
+        <div class="feature">
+          <h2 class="feature-title">D'autres idées ou remarques ?</h2>
+          <p class="feature-text">N'hésitez pas à nous écrire via le chat dans les paramètres, ou par email à <a href="mailto:hello@mistralgliders.com">hello@mistralgliders.com</a>.</p>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <script>
+    /* Choose the language from the ?lang= query parameter.
+       Default = English. Switch to French only when the value starts with
+       "fr" (fr, fr-FR, fr_CA, ...). A plain regex on location.search is used
+       (no URLSearchParams) for maximum compatibility with older in-app
+       WebViews. If JS is disabled, the English block simply stays visible. */
+    (function () {
+      var match = window.location.search.match(/[?&]lang=([^&]*)/i);
+      var lang = match ? match[1].toLowerCase() : '';
+      if (lang.indexOf('fr') === 0) {
+        var en = document.getElementById('content-en');
+        var fr = document.getElementById('content-fr');
+        if (en && fr) {
+          en.style.display = 'none';
+          fr.style.display = '';
+          document.documentElement.lang = 'fr';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
